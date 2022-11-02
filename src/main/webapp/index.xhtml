@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: akade
+  Date: 25.10.2022
+  Time: 12:18
+-->
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<head jsf:id="headIndex">
+    <title>Workout-app welcome</title>
+    <h:outputStylesheet library="css" name="main.css"/>
+</head>
+
+<body jsf:id="bodyIndex">
+
+
+<form jsf:id="menuUser" jsf:prependId="false">
+
+<div jsf:id="blockUserChoose" style="display: inline-block">
+    <h2>SEARCH TRAINING BY USER</h2>
+    <h:selectOneMenu id="selectUser" value="#{userBean.idUserToShow}" style="background-color: burlywood; text-decoration-color: darkred ">
+        <f:selectItems value="#{userBean.userList}" var="user"
+                       itemLabel="#{user.name}" itemValue="#{user.userId}"/>
+        <f:ajax event="change" render="userTrainTable trainList" listener="#{userBean.getAllTrainingForUser()}"/>
+    </h:selectOneMenu>
+    <h:messages for="selectUser"/>
+
+    <h:commandButton style="background-color: burlywood;text-decoration-color: darkred " value="Add training for choosed user" action="#{userBean.goToAddTraining()}"/>
+</div>
+</form>
+
+
+
+<br/>
+
+<div jsf:id="userTrainTable">
+    <h:dataTable value="#{userBean.userChoosed.trainingDetailsList}" var="train" bgcolor="grey" border="1">
+        <h:column>
+            <f:facet name="header">TRAINING ID</f:facet>
+            <h:outputText value="#{train.trainingId}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">DATE</f:facet>
+            <h:outputText value="#{train.date}"/>
+        </h:column>
+        <h:column>
+            <f:facet name="header">Pokaż szczegóły treningu</f:facet>
+            <h:commandButton id="trainingDetails" value="DETAILS">
+                <f:ajax execute="@this" render="trainList" event="click" listener="#{userBean.getTrainingDetalisForUser(train.user.userId,train.trainingId)}"/>
+            </h:commandButton>
+        </h:column>
+    </h:dataTable>
+</div>
+
+
+<form jsf:id="trainList">
+    <ul>
+        <ui:repeat value="#{userBean.exerciseOnTrainingList}" var="exOnTrain">
+            <li>#{exOnTrain.exercise}<br/>
+            Liczba serii: #{exOnTrain.seriesNumber}<br/> powtórzenia: #{exOnTrain.repeat} <br/>
+            Ciężar: #{exOnTrain.weight}</li>
+        </ui:repeat>
+    </ul>
+</form>
+
+<form jsf:id="formExerciseList">
+    <p style="background-color: burlywood;text-decoration-color: darkred">LIST OF WORKOUT IN BASE: </p>
+    <ul>
+        <ui:repeat value="#{exerciseBean.exerciseList}" var="exercise">
+            <li>#{exercise.name}: #{exercise.bodyPart}
+            </li>
+        </ui:repeat>
+    </ul>
+</form>
+</body>
+
+</html>

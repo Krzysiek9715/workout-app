@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: akade
+  Date: 25.10.2022
+  Time: 12:18
+-->
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<head jsf:id="headIndex">
+    <title>Workout-app add welcome</title>
+    <h:outputStylesheet library="css" name="main.css"/>
+</head>
+
+<body jsf:id="bodyIndex">
+
+
+<form jsf:id="addTraining" jsf:prependId="false">
+    <p>Add training for user: #{addTrainingBean.user.name} </p><br/>
+    <h:panelGrid>
+        <p>Insert training date(dd-mm-yyyy):</p>
+        <h:inputText id="dateTraining" value="#{addTrainingBean.date}" requiredMessage="Set Date" required="true"/>
+        <h:commandButton value="Add training" action="#{addTrainingBean.addTraining()}"/>
+    </h:panelGrid>
+</form>
+
+
+</body>
+
+</html>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: akade
+  Date: 25.10.2022
+  Time: 12:18
+-->
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<head jsf:id="headIndex">
+    <title>Workout-app add welcome</title>
+    <h:outputStylesheet library="css" name="main.css"/>
+</head>
+
+<body jsf:id="bodyIndex">
+
+
+<form jsf:id="addTraining" jsf:prependId="false">
+    <p style="background-color: burlywood;text-decoration-color: darkred">Add training for user: #{addExercisesBean.user.name} </p>
+    <br/>
+    <p style="background-color: burlywood;text-decoration-color: darkred">Add training details for train from: #{addExercisesBean.trainingDetails.date} </p>
+    <br/>
+    <h:panelGrid style="margin-left: 3%" columns="1">
+        <h:selectOneMenu id="selectExerciseType" value="#{addExercisesBean.exerciseId}"
+                         style="background-color: burlywood; text-decoration-color: darkred ">
+            <f:selectItems value="#{addExercisesBean.exerciseList}" var="exercise"
+                           itemLabel="#{exercise.name}" itemValue="#{exercise.exerciseId}"/>
+            <f:ajax event="change" render="describeExercise" listener="#{addExercisesBean.changeExercise()}"/>
+        </h:selectOneMenu>
+        <h:messages for="selectExerciseType"/>
+    </h:panelGrid>
+    <br/>
+
+    <h:panelGrid columns="2" border="1"
+                 style="background-color: burlywood;text-decoration-color: darkred;display: inline-block">
+        <f:facet name="header">
+            <h:outputText value="Set values"/>
+        </f:facet>
+        <h:outputText value="Please set series number"/>
+        <h:inputText id="series" placeholder="Series number" value="#{addExercisesBean.seriesNumber}" required="true"
+                     requiredMessage="Set value"/>
+        <h:outputText value="Please set repetitions"/>
+        <h:inputText id="repetitions" placeholder="Repetitions" value="#{addExercisesBean.repetitions}" required="true"
+                     requiredMessage="Set value"/>
+        <h:outputText value="Please set weight (kg)"/>
+        <h:inputText id="weight" placeholder="Weight" value="#{addExercisesBean.weight}" required="false"/>
+        <f:facet name="footer">
+            <h:panelGroup style = "display:block; text-align:center">
+            <h:commandButton style="display: inline-block;background-color: burlywood;text-decoration-color: darkred"
+                             value="+" action="#{addExercisesBean.addToExerciseList()}"/>
+            <h:messages styleClass="error"/>
+            </h:panelGroup>
+        </f:facet>
+    </h:panelGrid>
+</form>
+
+<form jsf:id="resultList" jsf:prependId="false">
+
+    <div jsf:id="exerciseTrainDetails">
+        <h:dataTable border="1" value="#{addExercisesBean.exerciseOnTrainingList}" var="results"
+                     style="background-color: sandybrown; color: darkred; border-color: darkred">
+            <h:column>
+                <f:facet name="header">EXERCISE NAME</f:facet>
+                <h:outputText value="#{results.exercise.name}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">BODY PART</f:facet>
+                <h:outputText value="#{results.exercise.bodyPart}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">SERIES</f:facet>
+                <h:outputText value="#{results.seriesNumber}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">REPETITIONS</f:facet>
+                <h:outputText value="#{results.repeat}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">WEIGHT</f:facet>
+                <h:outputText value="#{results.weight}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header">DELETE</f:facet>
+                <h:commandButton style="background-color: burlywood;text-decoration-color: darkred " value="Delete"
+                                 action="#{addExercisesBean.deleteExOnTra(results.eOtId)}"/>
+            </h:column>
+        </h:dataTable>
+    </div>
+    <h:commandButton style="background-color: burlywood;text-decoration-color: darkred; margin-left: 10%"
+                     value="Back to menu" action="index"/>
+</form>
+
+</body>
+
+</html>
