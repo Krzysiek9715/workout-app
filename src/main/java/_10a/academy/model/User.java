@@ -18,11 +18,16 @@ public class User {
     @Column(name = "NAME")
     private String name;
 
+    @Column(name = "PASSWORD_HASH")
+    private String passwordHash;
+
     @Column(name = "EMAIL")
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.MERGE,CascadeType.PERSIST})
     List<TrainingDetails> trainingDetailsList;
+
+
 
 
     public User() {

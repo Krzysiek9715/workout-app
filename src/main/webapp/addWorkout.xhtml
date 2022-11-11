@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Created by IntelliJ IDEA.
+  User: akade
+  Date: 25.10.2022
+  Time: 12:18
+-->
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+<head jsf:id="headIndex">
+   <title>Workout-app add workout welcome</title>
+   <h:outputStylesheet library="css" name="main.css"/>
+</head>
+
+<body jsf:id="bodyIndex">
+
+
+<form jsf:id="addTraining" jsf:prependId="false">
+   <p>Add exercise to our base</p><br/>
+   <h:panelGrid>
+      <p>Insert exercise name: </p>
+      <h:inputText id="workoutName" value="#{exerciseBean.exName}" label="Date" required="true" requiredMessage="Wrong Data">
+      </h:inputText>
+      <h:selectOneMenu id="selectBodyPart" value="#{exerciseBean.bodyPartEnum}">
+         <f:selectItems value="#{exerciseBean.bodyPartEnumList}" var="bodyPart"
+                        itemLabel="#{bodyPart}" itemValue="#{bodyPart}"/>
+      </h:selectOneMenu>
+      <h:messages for="workoutName" style="color: red"/>
+      <h:commandButton value="Add exercise" action="#{exerciseBean.addExercise()}"/>
+   </h:panelGrid>
+</form>
+
+
+</body>
+
+</html>
