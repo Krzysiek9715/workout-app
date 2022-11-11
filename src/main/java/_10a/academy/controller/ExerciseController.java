@@ -2,6 +2,7 @@ package _10a.academy.controller;
 
 
 import _10a.academy.model.Exercise;
+import _10a.academy.model.Exercise_;
 
 import javax.ejb.Stateless;
 import javax.persistence.Entity;
@@ -24,7 +25,7 @@ public class ExerciseController {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Exercise> criteriaQuery = criteriaBuilder.createQuery(Exercise.class);
         Root<Exercise> exerciseRoot = criteriaQuery.from(Exercise.class);
-        exerciseRoot.fetch("exerciseOnTrainingSetEx", JoinType.LEFT);
+        exerciseRoot.fetch(Exercise_.exerciseOnTrainingSetEx, JoinType.LEFT);
         return entityManager.createQuery(criteriaQuery.select(exerciseRoot).distinct(true)).getResultList();
     }
 
@@ -33,13 +34,12 @@ public class ExerciseController {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Exercise> criteriaQuery = criteriaBuilder.createQuery(Exercise.class);
         Root<Exercise> exerciseRoot = criteriaQuery.from(Exercise.class);
-        exerciseRoot.fetch("exerciseOnTrainingSetEx", JoinType.LEFT);
+        exerciseRoot.fetch(Exercise_.exerciseOnTrainingSetEx, JoinType.LEFT);
         return entityManager.createQuery(criteriaQuery.select(exerciseRoot)
-                .where(criteriaBuilder.equal(exerciseRoot.get("exerciseId"),exerciseId))).getSingleResult();
+                .where(criteriaBuilder.equal(exerciseRoot.get(Exercise_.exerciseId),exerciseId))).getSingleResult();
     }
 
     public void addExercise(Exercise exercise){
             entityManager.merge(exercise);
-
     }
 }

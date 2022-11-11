@@ -19,11 +19,18 @@ public class Exercise {
     private String name;
 
     @Column(name = "BODY_PART")
-    private String bodyPart;
+    private BodyPartEnum bodyPart;
 
     @OneToMany(mappedBy = "exercise", cascade = {CascadeType.ALL})
     Set<ExerciseOnTraining> exerciseOnTrainingSetEx;
 
+    public Exercise() {
+    }
+
+    public Exercise(String name, BodyPartEnum bodyPart) {
+        this.name = name;
+        this.bodyPart = bodyPart;
+    }
 
     public Long getExerciseId() {
         return exerciseId;
@@ -41,11 +48,11 @@ public class Exercise {
         this.name = name;
     }
 
-    public String getBodyPart() {
+    public BodyPartEnum getBodyPart() {
         return bodyPart;
     }
 
-    public void setBodyPart(String bodyPart) {
+    public void setBodyPart(BodyPartEnum bodyPart) {
         this.bodyPart = bodyPart;
     }
 

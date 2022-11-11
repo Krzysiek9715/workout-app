@@ -1,7 +1,7 @@
 package _10a.academy.model;
 
 import javax.persistence.*;
-
+import java.sql.Date;
 import java.util.Set;
 
 
@@ -16,7 +16,7 @@ public class TrainingDetails {
     private Long trainingId;
 
     @Column(name = "DATE")
-    private String date;
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID")
@@ -29,7 +29,7 @@ public class TrainingDetails {
     public TrainingDetails() {
     }
 
-    public TrainingDetails(String date, User user) {
+    public TrainingDetails(Date date, User user) {
         this.date = date;
         this.user = user;
     }
@@ -42,12 +42,12 @@ public class TrainingDetails {
         this.trainingId = trainingId;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDate(Date date) {
+        this.date =date;
     }
 
     public User getUser() {

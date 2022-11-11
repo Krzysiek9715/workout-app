@@ -1,7 +1,6 @@
 package _10a.academy.beany;
 
 
-import _10a.academy.controller.ExOnTrainController;
 import _10a.academy.controller.ExerciseController;
 import _10a.academy.controller.TrainingController;
 import _10a.academy.controller.UserController;
@@ -12,12 +11,12 @@ import _10a.academy.model.User;
 import org.omnifaces.cdi.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.Pattern;
 import java.io.Serializable;
 import java.util.List;
 
@@ -28,9 +27,6 @@ public class AddTrainingBean implements Serializable {
     Logger log = LoggerFactory.getLogger(getClass());
     @EJB
     TrainingController trainingController;
-
-    @EJB
-    ExOnTrainController exOnTrainController;
 
     @EJB
     UserController userController;
@@ -44,7 +40,8 @@ public class AddTrainingBean implements Serializable {
 
     private ExerciseOnTraining newExerciseOnTraining;
 
-    private String date;
+    @Pattern(regexp = "[0-9]{4}-{1}[0-9]{2}-{1}[0-9]{2}", message = "Wrong data format! need: yyyy-MM-dd")
+    private String dateString;
 
     private User user;
 
@@ -96,12 +93,12 @@ public class AddTrainingBean implements Serializable {
         this.user = user;
     }
 
-    public String getDate() {
-        return date;
+    public String getDateString() {
+        return dateString;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
     }
 
     public List<Exercise> getExerciseList() {
@@ -146,11 +143,15 @@ public class AddTrainingBean implements Serializable {
     /* METODY *********************************************************************************/
 
 
+
     public String addTraining(){
         log.info("start add: ");
         log.info("added user: {}", user);
-        TrainingDetails trainingToAdd = new TrainingDetails(date,user);
-        log.info("added date: {}", date);
+        log.info("Mam date {}", dateString);
+        java.sql.Date dateSql = java.sql.Date.valueOf(dateString);
+        log.info("Mam date {}", dateSql);
+        TrainingDetails trainingToAdd = new TrainingDetails(dateSql,user);
+        log.info("added date: {}", dateSql);
         log.info("I want to add training: {}", trainingToAdd);
         trainingController.addTraining(trainingToAdd);
         return "addExercises.xhtml?userId="+user.getUserId()+"&trainId="+trainingToAdd.getTrainingId()+"&faces-redirect=true";

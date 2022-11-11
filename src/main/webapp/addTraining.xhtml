@@ -11,7 +11,8 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
 
 <head jsf:id="headIndex">
     <title>Workout-app add welcome</title>
@@ -24,8 +25,10 @@
 <form jsf:id="addTraining" jsf:prependId="false">
     <p>Add training for user: #{addTrainingBean.user.name} </p><br/>
     <h:panelGrid>
-        <p>Insert training date(dd-mm-yyyy):</p>
-        <h:inputText id="dateTraining" value="#{addTrainingBean.date}" requiredMessage="Set Date" required="true"/>
+        <p>Insert training date (YYYT-MM-DD):</p>
+        <h:inputText id="dateTraining" value="#{addTrainingBean.dateString}" label="Date" required="true" requiredMessage="Wrong Data">
+        </h:inputText>
+        <h:messages for="dateTraining" style="color: red"/>
         <h:commandButton value="Add training" action="#{addTrainingBean.addTraining()}"/>
     </h:panelGrid>
 </form>

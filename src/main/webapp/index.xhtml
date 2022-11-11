@@ -33,6 +33,7 @@
     <h:messages for="selectUser"/>
 
     <h:commandButton style="background-color: burlywood;text-decoration-color: darkred " value="Add training for choosed user" action="#{userBean.goToAddTraining()}"/>
+    <h:commandButton style="background-color: burlywood;text-decoration-color: darkred " value="Add workout to database" action="addWorkout"/>
 </div>
 </form>
 
@@ -51,7 +52,7 @@
             <h:outputText value="#{train.date}"/>
         </h:column>
         <h:column>
-            <f:facet name="header">Pokaż szczegóły treningu</f:facet>
+            <f:facet name="header">Display training details</f:facet>
             <h:commandButton id="trainingDetails" value="DETAILS">
                 <f:ajax execute="@this" render="trainList" event="click" listener="#{userBean.getTrainingDetalisForUser(train.user.userId,train.trainingId)}"/>
             </h:commandButton>
@@ -74,7 +75,7 @@
     <p style="background-color: burlywood;text-decoration-color: darkred">LIST OF WORKOUT IN BASE: </p>
     <ul>
         <ui:repeat value="#{exerciseBean.exerciseList}" var="exercise">
-            <li>#{exercise.name}: #{exercise.bodyPart}
+            <li>#{exercise.name}: #{exercise.bodyPart.toString()}
             </li>
         </ui:repeat>
     </ul>
